@@ -2,8 +2,6 @@
 
 A React application built with [React](https://reactjs.org/) and TypeScript. This app does making payment with invoices.
 
----
-
 ## Features
 
 - Built with React
@@ -12,7 +10,38 @@ A React application built with [React](https://reactjs.org/) and TypeScript. Thi
 - API integration
 - Fully typed
 
----
+## Project Structure
+
+```
+invoice-payment-frontend-react/
+├── .vscode/               # VSCode editor settings
+├── node_modules/          # Project dependencies
+├── public/                # Static files
+├── src/                   # Source code
+│   ├── container/         # Layout or view-specific components
+│   ├── data/              # Mock data or static data files
+│   ├── lib/               # Shared libraries/helpers
+│   ├── pages/             # Route-based components
+│   ├── utils/             # Utility functions
+│   ├── App.css            # Global styles
+│   ├── App.test.tsx       # Test file for App component
+│   ├── App.tsx            # Root App component
+│   ├── index.css          # Tailwind imports and base styles
+│   ├── index.tsx          # Entry point of the React app
+│   ├── logo.svg           # Project logo
+│   ├── react-app-env.d.ts # Type definitions for environment variables
+│   ├── reportWebVitals.ts # Performance reporting
+│   └── setupTests.ts      # Test setup file
+├── .env                   # Environment variables
+├── .env.example           # Example env file
+├── .gitignore             # Git ignored files list
+├── LICENSE                # Project license
+├── package-lock.json      # Lock file for npm
+├── package.json           # Project metadata and scripts
+├── README.md              # Project documentation
+├── tailwind.config.js     # Tailwind configuration
+└── tsconfig.json          # TypeScript configuration
+```
 
 ## Setup & Installation
 
