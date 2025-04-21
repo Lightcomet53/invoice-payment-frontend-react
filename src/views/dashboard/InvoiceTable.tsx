@@ -72,10 +72,7 @@ const InvoiceTable: React.FC<PropsType> = ({
   }, []);
 
   const handleSelect = (e: any) => {
-    if (e.selectedNodes.length > 0) {
-      setSelectedInvoices(e.selectedNodes.map((item: any) => item.data));
-      console.log(e.selectedNodes.map((item: any) => item.data));
-    }
+    setSelectedInvoices(e.selectedNodes.map((item: any) => item.data));
   };
 
   // Container: Defines the grid's theme & dimensions.
