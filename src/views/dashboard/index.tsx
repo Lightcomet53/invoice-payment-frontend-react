@@ -19,6 +19,7 @@ import {
   isValidExpiryDate,
 } from "../../utils/validation";
 import axios from "axios";
+import { getTotalInvoiceAmount } from "../../utils/calculator";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
@@ -85,7 +86,6 @@ const Dashboard = () => {
     }
   };
 
-  const totalAmount = invoices.reduce((total, item) => total + item.amount, 0);
 
   return (
     <Container>
@@ -100,7 +100,7 @@ const Dashboard = () => {
             <p className="text-gray-600">{formatDate(Date.now())}</p>
           </div>
           <span className="text-2xl text-gray-600 font-medium">
-            {priceFormat(totalAmount)}
+            {priceFormat(getTotalInvoiceAmount(invoices))}
           </span>
         </div>
       </div>
@@ -119,7 +119,7 @@ const Dashboard = () => {
         >
           Pay{" "}
           {priceFormat(
-            selectedInvoices.reduce((total, item) => total + item.amount, 0)
+            getTotalInvoiceAmount(selectedInvoices)
           )}
         </button>
       </div>

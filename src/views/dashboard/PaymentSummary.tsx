@@ -1,6 +1,8 @@
 import React from "react";
 import { InvoiceType } from "../../lib/interface";
 import { priceFormat } from "../../utils/format";
+import { getTotalInvoiceAmount } from "../../utils/calculator";
+import { fee } from "../../lib/constants";
 
 interface PropsType {
   selectedInvoices: InvoiceType[];
@@ -31,7 +33,7 @@ const PaymentSummary: React.FC<PropsType> = ({ selectedInvoices }) => {
                 Fee
               </td>
               <td align="right" className="text-gray-600" width={200}>
-                {priceFormat(5)}
+                {priceFormat(getTotalInvoiceAmount(selectedInvoices) * fee)}
               </td>
             </tr>
           </tbody>
