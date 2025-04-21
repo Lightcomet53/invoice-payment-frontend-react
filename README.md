@@ -1,6 +1,6 @@
-# Invoice Payment
+# Invoice Payment Frontend - React Project
 
-A React application built with [React](https://reactjs.org/) and TypeScript. This app does making payment with invoices.
+This is frontend for managing invoice payments, built using React and TypeScript.
 
 ## Features
 
@@ -48,7 +48,7 @@ invoice-payment-frontend-react/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Lightcomet53/invoice-payment-frontend-react.git
+git clone https://github.com/your-username/invoice-payment-frontend-react.git
 cd invoice-payment-frontend-react
 ```
 
