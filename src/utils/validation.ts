@@ -47,9 +47,6 @@ export const isFormValid = (obj: any) => {
     if (isEmpty(obj[key])) {
       isValid = false;
     }
-    if (key === "email" && !isValidEmail(obj[key] as string)) {
-      isValid = false;
-    }
   });
   return isValid;
 };

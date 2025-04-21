@@ -94,7 +94,7 @@ const Dashboard = () => {
       <hr />
 
       <div className="flex justify-end mt-4 mb-6">
-        <div className="bg-[#F5F5F5] flex items-center w-[400px] justify-between py-2 px-4 rounded-md">
+        <div className="bg-[#F5F5F5] flex items-center w-full sm:w-[400px] justify-between py-2 px-4 rounded-md">
           <div className="mr-20">
             <p className="text-gray-600">Total amount to pay</p>
             <p className="text-gray-600">{formatDate(Date.now())}</p>
@@ -114,7 +114,7 @@ const Dashboard = () => {
 
       <div className="flex justify-end pt-6">
         <button
-          className="bg-[#442D95] w-[400px] h-[60px] flex justify-center items-center rounded-md text-white text-2xl"
+          className="bg-[#442D95] w-full sm:w-[400px] h-[60px] flex justify-center items-center rounded-md text-white text-2xl"
           onClick={handleOpen}
         >
           Pay{" "}

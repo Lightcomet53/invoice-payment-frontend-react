@@ -11,7 +11,7 @@ interface PropsType {
 const PaymentSummary: React.FC<PropsType> = ({ selectedInvoices }) => {
   return (
     <div className="flex justify-end">
-      <div className="rounded-md border w-[400px] border-gray-200 p-6">
+      <div className="rounded-md border w-full sm:w-[400px] border-gray-200 p-6">
         <div className="flex justify-end mb-6">
           <span className="text-gray-600 font-medium">Payment summary</span>
         </div>

@@ -56,6 +56,7 @@ const InvoiceTable: React.FC<PropsType> = ({
   const myTheme = themeQuartz.withParams({
     rowHeight: 50,
     wrapperBorder: false,
+    wrapperBorderRadius: 0,
   });
   const theme = useMemo<Theme | "legacy">(() => {
     return myTheme;
@@ -77,7 +78,7 @@ const InvoiceTable: React.FC<PropsType> = ({
 
   // Container: Defines the grid's theme & dimensions.
   return (
-    <div style={{ width: "100%", height: 350 }}>
+    <div className="mb-10">
       <AgGridReact
         rowData={invoices}
         columnDefs={colDefs}
@@ -87,6 +88,7 @@ const InvoiceTable: React.FC<PropsType> = ({
         rowSelection={rowSelection}
         suppressAggFuncInHeader={true}
         onSelectionChanged={handleSelect}
+        domLayout="autoHeight"
       />
     </div>
   );
