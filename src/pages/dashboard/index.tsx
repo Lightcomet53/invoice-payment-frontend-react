@@ -74,7 +74,7 @@ const Dashboard = () => {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/payment/create`,
+        `${process.env.REACT_APP_SERVER_URL}/api/payment`,
         data
       );
       setPaymentResponse(res.data);
