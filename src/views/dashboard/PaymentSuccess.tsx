@@ -1,13 +1,13 @@
 import React from "react";
 import { formatDateAndTime, priceFormat } from "../../utils/format";
 import { PaymentResponseType } from "../../lib/interface";
+import { fee } from "../../lib/constants";
 
 interface PropsType {
   paymentResponse: PaymentResponseType;
 }
 
 const PaymentSuccess: React.FC<PropsType> = ({ paymentResponse }) => {
-  const fee = 0.001;
 
   return (
     <div className="flex items-center w-[580px] h-[700px]">
@@ -63,7 +63,7 @@ const PaymentSuccess: React.FC<PropsType> = ({ paymentResponse }) => {
         <div className="flex justify-between">
           <span className="text-2xl text-gray-600">Fee</span>
           <span className="text-2xl font-medium">
-            {priceFormat(paymentResponse.data.amount / 1000)}
+            {priceFormat(paymentResponse.data.amount * fee)}
           </span>
         </div>
       </div>
