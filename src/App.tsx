@@ -1,4 +1,4 @@
-import Dashboard from "./views/dashboard";
+import Dashboard from "./pages/dashboard";
 
 const App = () => {
   return <Dashboard />;
