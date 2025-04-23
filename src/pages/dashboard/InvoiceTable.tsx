@@ -79,6 +79,9 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({
       rowHeight: 50,
       wrapperBorder: false,
       wrapperBorderRadius: 0,
+      headerFontSize: 12,
+      headerFontWeight: 500,
+      headerHeight: 44,
     });
   }, []);
 
@@ -100,19 +103,18 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({
   };
 
   return (
-    <div className="mb-10">
-      <AgGridReact
-        rowData={invoices}
-        columnDefs={columnDefinitions}
-        defaultColDef={defaultColDef}
-        suppressAutoSize={true}
-        theme={gridTheme}
-        rowSelection={rowSelection}
-        suppressAggFuncInHeader={true}
-        onSelectionChanged={handleSelectionChanged}
-        domLayout="autoHeight"
-      />
-    </div>
+    <AgGridReact
+      rowHeight={44}
+      rowData={invoices}
+      columnDefs={columnDefinitions}
+      defaultColDef={defaultColDef}
+      suppressAutoSize={true}
+      theme={gridTheme}
+      rowSelection={rowSelection}
+      suppressAggFuncInHeader={true}
+      onSelectionChanged={handleSelectionChanged}
+      domLayout="autoHeight"
+    />
   );
 };
 

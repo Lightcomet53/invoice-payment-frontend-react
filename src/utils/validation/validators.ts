@@ -57,31 +57,30 @@ export const isFormValid = (obj: any) => {
  * @returns boolean - True if the card number is valid, false otherwise
  */
 export const isValidCardNumber = (cardNumber: string): boolean => {
-  //   const digitsOnly = cardNumber.replace(/\D/g, "");
+    const digitsOnly = cardNumber.replace(/\D/g, "");
 
-  //   // Must be at least 13–19 digits
-  //   if (digitsOnly.length < 13 || digitsOnly.length > 19) {
-  //     return false;
-  //   }
+    // Must be at least 13–19 digits
+    if (digitsOnly.length < 13 || digitsOnly.length > 19) {
+      return false;
+    }
 
-  //   // Luhn Algorithm
-  //   let sum = 0;
-  //   let shouldDouble = false;
+    // Luhn Algorithm
+    let sum = 0;
+    let shouldDouble = false;
 
-  //   for (let i = digitsOnly.length - 1; i >= 0; i--) {
-  //     let digit = parseInt(digitsOnly[i], 10);
+    for (let i = digitsOnly.length - 1; i >= 0; i--) {
+      let digit = parseInt(digitsOnly[i], 10);
 
-  //     if (shouldDouble) {
-  //       digit *= 2;
-  //       if (digit > 9) digit -= 9;
-  //     }
+      if (shouldDouble) {
+        digit *= 2;
+        if (digit > 9) digit -= 9;
+      }
 
-  //     sum += digit;
-  //     shouldDouble = !shouldDouble;
-  //   }
+      sum += digit;
+      shouldDouble = !shouldDouble;
+    }
 
-  //   return sum % 10 === 0;
-  return true;
+    return sum % 10 === 0;
 };
 
 /**
@@ -90,27 +89,27 @@ export const isValidCardNumber = (cardNumber: string): boolean => {
  * @returns boolean - True if the expiry date is valid, false otherwise
  */
 export const isValidExpiryDate = (expiry: string): boolean => {
-  //   const [monthStr, yearStr] = expiry.replace(/\s/g, "").split("/");
+    const [monthStr, yearStr] = expiry.replace(/\s/g, "").split("/");
 
-  //   if (!monthStr || !yearStr || monthStr.length !== 2 || yearStr.length !== 2) {
-  //     return false; // Invalid format
-  //   }
+    if (!monthStr || !yearStr || monthStr.length !== 2 || yearStr.length !== 2) {
+      return false; // Invalid format
+    }
 
-  //   const month = parseInt(monthStr, 10);
-  //   const year = parseInt(yearStr, 10) + 2000; // "24" → 2024
+    const month = parseInt(monthStr, 10);
+    const year = parseInt(yearStr, 10) + 2000; // "24" → 2024
 
-  //   if (isNaN(month) || isNaN(year) || month < 1 || month > 12) {
-  //     return false; // Invalid month/year
-  //   }
+    if (isNaN(month) || isNaN(year) || month < 1 || month > 12) {
+      return false; // Invalid month/year
+    }
 
-  //   const now = new Date();
-  //   const currentMonth = now.getMonth() + 1; // 0-indexed
-  //   const currentYear = now.getFullYear();
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1; // 0-indexed
+    const currentYear = now.getFullYear();
 
-  //   // Card is expired if year is less or same but month is less
-  //   if (year < currentYear || (year === currentYear && month < currentMonth)) {
-  //     return false;
-  //   }
+    // Card is expired if year is less or same but month is less
+    if (year < currentYear || (year === currentYear && month < currentMonth)) {
+      return false;
+    }
 
   return true;
 };

@@ -23,42 +23,34 @@ const DEFAULT_PAYMENT_FORM: PayFormType = {
  */
 export const usePaymentForm = () => {
   const [formData, setFormData] = useState<PayFormType>(DEFAULT_PAYMENT_FORM);
-  const [errors, setErrors] = useState<string | null>(null);
 
-  const validateForm = (): boolean => {
+  const validateForm = (): string | null => {
     if (!isFormValid(formData)) {
-      setErrors("Please enter all fields!");
-      return false;
+      return "Please enter all fields!";
     }
 
     if (!isValidEmail(formData.email)) {
-      setErrors("Please enter a valid email address!");
-      return false;
+      return "Please enter a valid email address!";
     }
 
     if (!isValidCardNumber(formData.cardNumber)) {
-      setErrors("Please enter a valid card number");
-      return false;
+      return "Please enter a valid card number";
     }
 
     if (!isValidExpiryDate(formData.expiryDate)) {
-      setErrors("Please enter a valid expiry date");
-      return false;
+      return "Please enter a valid expiry date";
     }
 
-    setErrors(null);
-    return true;
+    return null;
   };
 
   const resetForm = () => {
     setFormData(DEFAULT_PAYMENT_FORM);
-    setErrors(null);
   };
 
   return {
     formData,
     setFormData,
-    errors,
     validateForm,
     resetForm,
   };

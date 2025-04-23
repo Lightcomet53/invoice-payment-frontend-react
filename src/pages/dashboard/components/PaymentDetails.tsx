@@ -6,9 +6,9 @@ interface PaymentDetailsProps {
 }
 
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({ label, value }) => (
-  <div className="flex justify-between">
-    <span className="text-2xl text-gray-600">{label}</span>
-    <span className="text-2xl font-medium">{value}</span>
+  <div className="flex justify-between mb-[9px]">
+    <span className="text-[22px] text-gray-600">{label}</span>
+    <span className="text-[22px] font-medium">{value}</span>
   </div>
 );
 

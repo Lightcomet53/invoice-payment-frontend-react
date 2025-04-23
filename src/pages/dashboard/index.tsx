@@ -25,7 +25,7 @@ const Dashboard = () => {
   >([]);
 
   // Payment form and validation
-  const { formData, setFormData, errors, validateForm, resetForm } =
+  const { formData, setFormData, validateForm, resetForm } =
     usePaymentForm();
 
   // Payment response
@@ -58,8 +58,10 @@ const Dashboard = () => {
   };
 
   const processPayment = async () => {
-    if (!validateForm()) {
-      alert(errors);
+    const errorMessage = validateForm();
+
+    if (errorMessage) {
+      alert(errorMessage);
       return;
     }
 
@@ -88,15 +90,17 @@ const Dashboard = () => {
 
   return (
     <AppLayout>
-      <h4 className="font-bold text-xl">INVOICES TO PAY</h4>
+      <h4 className="font-bold text-[15px]">INVOICES TO PAY</h4>
 
-      <hr />
+      <hr className="border-dividerColor mb-[17px] mt-[10px]" />
 
-      <div className="flex justify-end mt-4 mb-6">
+      <div className="flex justify-end mb-[28px]">
         <div className="bg-[#F5F5F5] flex items-center w-full sm:w-[400px] justify-between py-2 px-4 rounded-md">
           <div className="mr-20">
-            <p className="text-gray-600">Total amount to pay</p>
-            <p className="text-gray-600">{formatDisplayDate(new Date())}</p>
+            <p className="text-gray-500 text-xs">Total amount to pay</p>
+            <p className="text-gray-500 text-[13px]">
+              {formatDisplayDate(new Date())}
+            </p>
           </div>
           <span className="text-2xl text-gray-600 font-medium">
             {priceFormat(getTotalInvoiceAmount(availableInvoices))}
@@ -111,9 +115,9 @@ const Dashboard = () => {
 
       <PaymentSummary selectedInvoices={selectedInvoicesForPayment} />
 
-      <div className="flex justify-end pt-6">
+      <div className="flex justify-end">
         <button
-          className="bg-[#442D95] w-full sm:w-[400px] h-[60px] flex justify-center items-center rounded-md text-white text-2xl"
+          className="bg-primaryColor w-full sm:w-[400px] h-[58px] flex justify-center items-center rounded-md text-white text-[20px]"
           onClick={openPaymentDialog}
           disabled={selectedInvoicesForPayment.length === 0}
         >
