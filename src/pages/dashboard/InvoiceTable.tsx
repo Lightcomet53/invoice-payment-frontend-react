@@ -1,93 +1,115 @@
-import React, { useMemo, useState } from "react";
-
-import type { ColDef, RowSelectionOptions, Theme } from "ag-grid-community";
+import React, { useMemo } from "react";
+import type {
+  ColDef,
+  RowSelectionOptions,
+  Theme,
+  SelectionChangedEvent,
+} from "ag-grid-community";
 import {
   AllCommunityModule,
   ModuleRegistry,
   themeQuartz,
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { priceFormat } from "../../utils/format";
-import { StatusBadge } from "./StatusBadge";
-import { InvoiceType } from "../../lib/interface";
+import { priceFormat } from "../../utils/helpers/formatting";
+import StatusBadge from "./StatusBadge";
+import { StatusType } from "../../utils/constants/constants";
+import { InvoiceType } from "../../types/interface";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-interface PropsType {
+interface InvoiceTableProps {
   invoices: InvoiceType[];
-  setSelectedInvoices: (arg: InvoiceType[]) => void;
+  setSelectedInvoices: (invoices: InvoiceType[]) => void;
 }
 
-// Create new GridExample component
-const InvoiceTable: React.FC<PropsType> = ({
+const InvoiceTable: React.FC<InvoiceTableProps> = ({
   invoices,
   setSelectedInvoices,
 }) => {
-  // Column Definitions: Defines & controls grid columns.
-  const [colDefs, setColDefs] = useState<ColDef<InvoiceType>[]>([
-    {
-      field: "id",
-      resizable: false,
-      headerValueGetter: () => "Number",
-      cellRenderer: (params: any) => (
-        <div className="font-medium">{params.value}</div>
-      ),
-    },
-    { field: "vendor", resizable: false },
-    { field: "issueDate", resizable: false, headerValueGetter: () => "Date" },
-    { field: "dueDate", resizable: false },
-    {
-      field: "amount",
-      resizable: false,
-      cellRenderer: (params: any, index: number) => priceFormat(params.value),
-    },
-    {
-      field: "priority",
-      resizable: false,
-      cellRenderer: (params: any) => <StatusBadge status={params.value} />,
-    },
-  ]);
+  const columnDefinitions = useMemo<ColDef<InvoiceType>[]>(
+    () => [
+      {
+        field: "id",
+        resizable: false,
+        headerValueGetter: () => "Number",
+        cellRenderer: (params: { value: string }) => (
+          <div className="font-medium">{params.value}</div>
+        ),
+      },
+      {
+        field: "vendor",
+        resizable: false,
+      },
+      {
+        field: "issueDate",
+        resizable: false,
+        headerValueGetter: () => "Date",
+      },
+      {
+        field: "dueDate",
+        resizable: false,
+      },
+      {
+        field: "amount",
+        resizable: false,
+        cellRenderer: (params: { value: number }) => priceFormat(params.value),
+      },
+      {
+        field: "priority",
+        resizable: false,
+        cellRenderer: (params: { value: StatusType }) => (
+          <StatusBadge status={params.value} />
+        ),
+      },
+    ],
+    []
+  );
 
-  const defaultColDef: ColDef = {
-    flex: 1,
-    headerCheckboxSelection: true,
-  };
+  const defaultColDef = useMemo<ColDef>(
+    () => ({
+      flex: 1,
+      headerCheckboxSelection: true,
+    }),
+    []
+  );
 
-  const myTheme = themeQuartz.withParams({
-    rowHeight: 50,
-    wrapperBorder: false,
-    wrapperBorderRadius: 0,
-  });
-  const theme = useMemo<Theme | "legacy">(() => {
-    return myTheme;
-  }, [myTheme]);
+  const gridTheme = useMemo<Theme>(() => {
+    return themeQuartz.withParams({
+      rowHeight: 50,
+      wrapperBorder: false,
+      wrapperBorderRadius: 0,
+    });
+  }, []);
 
-  const rowSelection = useMemo<
-    RowSelectionOptions | "single" | "multiple"
-  >(() => {
-    return {
+  const rowSelection = useMemo<RowSelectionOptions>(
+    () => ({
       mode: "multiRow",
       groupSelects: "self",
       checkboxLocation: "autoGroupColumn",
-    };
-  }, []);
+    }),
+    []
+  );
 
-  const handleSelect = (e: any) => {
-    setSelectedInvoices(e.selectedNodes.map((item: any) => item.data));
+  const handleSelectionChanged = (event: SelectionChangedEvent) => {
+    const selectedNodes = event.api.getSelectedNodes();
+    const selectedData = selectedNodes
+      .map((node) => node.data as InvoiceType)
+      .filter(Boolean);
+    setSelectedInvoices(selectedData);
   };
 
-  // Container: Defines the grid's theme & dimensions.
   return (
     <div className="mb-10">
       <AgGridReact
         rowData={invoices}
-        columnDefs={colDefs}
+        columnDefs={columnDefinitions}
         defaultColDef={defaultColDef}
         suppressAutoSize={true}
-        theme={theme}
+        theme={gridTheme}
         rowSelection={rowSelection}
         suppressAggFuncInHeader={true}
-        onSelectionChanged={handleSelect}
+        onSelectionChanged={handleSelectionChanged}
         domLayout="autoHeight"
       />
     </div>

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import AppLayout from "../../components/layout/AppLayout";
-import { formatDisplayDate, priceFormat } from "../../utils/helpers/formatting";
+import { formatDate, priceFormat } from "../../utils/helpers/formatting";
 import InvoiceTable from "./InvoiceTable";
 import PaymentSummary from "./PaymentSummary";
 import Dialog from "rc-dialog";
@@ -12,14 +12,15 @@ import axios from "axios";
 import { getTotalInvoiceAmount } from "../../utils/helpers/invoiceCalculator";
 import usePaymentForm from "../../utils/hooks/usePaymentForm";
 
-const Dashboard = () => {
+const DashboardPage = () => {
   // Payment dialog state
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
   const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
 
   // Invoice state management
-  const [availableInvoices] = useState<InvoiceType[]>(invoiceData);
+  const [availableInvoices, setAvailableInvoices] =
+    useState<InvoiceType[]>(invoiceData);
   const [selectedInvoicesForPayment, setSelectedInvoicesForPayment] = useState<
     InvoiceType[]
   >([]);
@@ -38,6 +39,7 @@ const Dashboard = () => {
     },
   });
 
+  // Calculate total amount to pay
   const totalSelectedAmount = useMemo(
     () => getTotalInvoiceAmount(selectedInvoicesForPayment),
     [selectedInvoicesForPayment]
@@ -58,11 +60,13 @@ const Dashboard = () => {
   };
 
   const processPayment = async () => {
+    // Validate form data
     if (!validateForm()) {
       alert(errors);
       return;
     }
 
+    // Prepare payment request
     const paymentRequest = {
       ...formData,
       invoices: selectedInvoicesForPayment.map((item) => ({ id: item.id })),
@@ -78,6 +82,17 @@ const Dashboard = () => {
       );
       setPaymentResult(response.data);
       setIsPaymentSuccessful(true);
+
+      // Remove paid invoices from available list
+      if (response.data.message === "success") {
+        const paidInvoiceIds = selectedInvoicesForPayment.map(
+          (invoice) => invoice.id
+        );
+        setAvailableInvoices((prevInvoices) =>
+          prevInvoices.filter((invoice) => !paidInvoiceIds.includes(invoice.id))
+        );
+        setSelectedInvoicesForPayment([]);
+      }
     } catch (error) {
       console.error(error);
       alert("Payment processing failed. Please try again.");
@@ -96,7 +111,7 @@ const Dashboard = () => {
         <div className="bg-[#F5F5F5] flex items-center w-full sm:w-[400px] justify-between py-2 px-4 rounded-md">
           <div className="mr-20">
             <p className="text-gray-600">Total amount to pay</p>
-            <p className="text-gray-600">{formatDisplayDate(new Date())}</p>
+            <p className="text-gray-600">{formatDate(Date.now())}</p>
           </div>
           <span className="text-2xl text-gray-600 font-medium">
             {priceFormat(getTotalInvoiceAmount(availableInvoices))}
@@ -149,4 +164,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;

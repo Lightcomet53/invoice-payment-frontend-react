@@ -1,6 +1,6 @@
 import React from "react";
 
-const Container = ({ children }: { children: React.ReactNode }) => {
+const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <header className="w-full h-[80px] flex items-center bg-[#442D95] px-10">
@@ -11,4 +11,5 @@ const Container = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
-export default Container;
+
+export default AppLayout;

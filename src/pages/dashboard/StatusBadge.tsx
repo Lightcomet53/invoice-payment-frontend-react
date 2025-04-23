@@ -1,4 +1,9 @@
-type StatusType = "normal" | "high" | "urgent" | "critical";
+import React from "react";
+import { StatusType } from "../../utils/constants/constants";
+
+interface StatusBadgeProps {
+  status: StatusType;
+}
 
 const statusStyles: Record<
   StatusType,
@@ -26,15 +31,18 @@ const statusStyles: Record<
   },
 };
 
-export const StatusBadge = ({ status }: { status: StatusType }) => {
+const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   const { text, bg, dot } = statusStyles[status];
+  const displayText = status.charAt(0).toUpperCase() + status.slice(1);
 
   return (
     <div
       className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${bg} ${text}`}
     >
       <span className={`w-2 h-2 mr-2 rounded-full ${dot}`}></span>
-      {status.charAt(0).toUpperCase() + status.slice(1)}
+      {displayText}
     </div>
   );
 };
+
+export default StatusBadge;
